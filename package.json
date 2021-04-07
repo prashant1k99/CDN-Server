@@ -1,0 +1,25 @@
+{
+  "name": "cdn-server",
+  "version": "1.0.0",
+  "description": "CDN Server for responsive images",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prashant1k99/CDN-Server.git"
+  },
+  "keywords": [
+    "CDN"
+  ],
+  "author": "Prashant Singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/prashant1k99/CDN-Server/issues"
+  },
+  "homepage": "https://github.com/prashant1k99/CDN-Server#readme",
+  "dependencies": {
+    "aws-sdk": "^2.879.0"
+  }
+}
