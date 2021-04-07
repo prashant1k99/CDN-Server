@@ -1,0 +1,25 @@
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+  "name": "Prashant Singh",
+  "email": "prashantco111@gmail.com",
+  "password": "test"
+}
+
+###
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "prashantco111@gmail.com",
+  "password": "test"
+}
+
+###
+POST http://localhost:3000/auth/token
+Content-Type: application/json
+
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDZkNjRlMDQ4ZDMzZDQ0ZjA2NGFlNmYiLCJuYW1lIjoiUHJhc2hhbnQgU2luZ2giLCJlbWFpbCI6InByYXNoYW50Y28xMTFAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkSE11ZjVzOEd0R1pCaWd3UTYxU2I4ZUZYSVh3NVhzS1hTLkIwSkFaMHltRnRtdzBZZjhRTEsiLCJjcmVhdGVkQXQiOiIyMDIxLTA0LTA3VDA3OjUzOjA0Ljc2OFoiLCJ1cGRhdGVkQXQiOiIyMDIxLTA0LTA3VDA3OjUzOjA0Ljc2OFoiLCJfX3YiOjAsImlhdCI6MTYxNzc4OTcxMn0.luiZSaT0itwhFL82vgVurltaLTIaRfwWNiwglsZTX7c"
+}

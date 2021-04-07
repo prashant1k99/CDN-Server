@@ -10,13 +10,20 @@ const ACCESS_SECRET = process.env.ACCESS_TOKEN_SECRET,
 // Function to generate access token
 const generateAccessToken = (user) => new Promise((resolve, reject) => {
   if (!user) reject('Please provide payload')
-  resolve(JWT.sign(user, ACCESS_SECRET, { expiresIn: '60m' }))
+  const userInfo = user._doc
+  delete userInfo.password
+  resolve(JWT.sign(userInfo, ACCESS_SECRET, { expiresIn: '60m' }))
 })
 
 // Function to generate refresh token
 const generateRefreshToken = (user) => new Promise(async (resolve, reject) => {
   if (!user) reject('Please provide payload')
-  const generatedRefreshToken = JWT.sign(user, REFRESH_SECRET)
+  await refreshToken.deleteMany({
+    user: user
+  })
+  const userInfo = user._doc
+  delete userInfo.password
+  const generatedRefreshToken = JWT.sign(userInfo, REFRESH_SECRET)
   await refreshToken.create({
     user: user,
     token: generatedRefreshToken
@@ -30,14 +37,12 @@ const verifyRefreshToken = (token) => {
     if (!token) reject('Please provide payload')
     JWT.verify(token, REFRESH_SECRET, async (err, user) => {
       if (err) reject(err)
-      const refreshToken = await refreshToken.findOne({
+      const userRefreshToken = await refreshToken.findOne({
         token
-      })
-      if (!refreshToken) reject('Invalid Refresh Token')
-      const accessToken = await generateAccessToken({
-        username: user.username,
-        name: user.name
-      })
+      }).populate('user')
+      if (!userRefreshToken) reject('Invalid Refresh Token')
+      console.log(userRefreshToken)
+      const accessToken = await generateAccessToken(userRefreshToken._doc.user)
       resolve({
         accessToken: accessToken
       })
