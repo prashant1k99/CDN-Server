@@ -41,7 +41,6 @@ const verifyRefreshToken = (token) => {
         token
       }).populate('user')
       if (!userRefreshToken) reject('Invalid Refresh Token')
-      console.log(userRefreshToken)
       const accessToken = await generateAccessToken(userRefreshToken._doc.user)
       resolve({
         accessToken: accessToken
