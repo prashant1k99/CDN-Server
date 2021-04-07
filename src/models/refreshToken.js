@@ -3,19 +3,21 @@ const Schema = mongoose.Schema
 
 const refreshTokenSchema = new Schema(
   {
-    name: String,
-    email: {
-      type: String,
+    user: {
+      type: Schema.Types.ObjectId,
       required: true,
-      unique: true
+      ref: 'User'
     },
-    password: {
+    token: {
       type: String,
       required: true
     }
   },
   {
-    timestamps: { createdAt: true, updatedAt: false }
+    timestamps: {
+      createdAt: true,
+      updatedAt: false
+    }
   }
 )
 
