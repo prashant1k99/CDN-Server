@@ -9,7 +9,7 @@ const router = express.Router(),
   API = data.Api,
   authTokenValidator = middlewares.authTokenValidator
 
-router.get('/key', authTokenValidator, (req, res) => {
+router.get('/', authTokenValidator, (req, res) => {
   try {
     const userAPIKeys = await apiKeys.find({
       user: req.user._id
@@ -26,7 +26,7 @@ router.get('/key', authTokenValidator, (req, res) => {
   }
 })
 
-router.post('/key', authTokenValidator, async (req, res) => {
+router.post('/', authTokenValidator, async (req, res) => {
   try {
     const uniquKey = uniqueKeyGenerator()
     const apiKey = uniquKey.next().value
@@ -43,7 +43,7 @@ router.post('/key', authTokenValidator, async (req, res) => {
   }
 })
 
-router.delete('/key/:id', authTokenValidator, async (req, res) => {
+router.delete('/:id', authTokenValidator, async (req, res) => {
   try {
     const apiKey = await API.deleteOne({
       _id: req.params.id,
@@ -57,7 +57,7 @@ router.delete('/key/:id', authTokenValidator, async (req, res) => {
   }
 })
 
-router.update('/key/:id', authTokenValidator, async (req, res) => {
+router.update('/:id', authTokenValidator, async (req, res) => {
   try {
     if (!req.body || Object.keys(req.body).length === 0) return res.status(400).send('Payload is not provided.')
     if (typeof req.body.domains !== 'object') return res.status(400).send('Incorrect Payload.')
