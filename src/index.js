@@ -14,6 +14,7 @@ app.disable('x-powered-by')
 app.use(cors(corsOption))
 
 app.use('/auth', routes.authRoute)
+app.use('/api', routes.apiRoute)
 app.use('/', (req, res) => res.send('Hello'))
 
 module.exports = app
