@@ -9,9 +9,9 @@ const router = express.Router(),
   API = data.Api,
   authTokenValidator = middlewares.authTokenValidator
 
-router.get('/', authTokenValidator, (req, res) => {
+router.get('/', authTokenValidator, async (req, res) => {
   try {
-    const userAPIKeys = await apiKeys.find({
+    const userAPIKeys = await API.find({
       user: req.user._id
     })
     const keys = userAPIKeys.map((key) => {
@@ -19,7 +19,7 @@ router.get('/', authTokenValidator, (req, res) => {
       delete key._id
       return key
     })
-    console.log(keys)
+    res.status(200).send(keys)
   } catch (err) {
     console.log(err)
     res.status(500).send('Something Went Wrong')
@@ -57,7 +57,7 @@ router.delete('/:id', authTokenValidator, async (req, res) => {
   }
 })
 
-router.update('/:id', authTokenValidator, async (req, res) => {
+router.post('/:id', authTokenValidator, async (req, res) => {
   try {
     if (!req.body || Object.keys(req.body).length === 0) return res.status(400).send('Payload is not provided.')
     if (typeof req.body.domains !== 'object') return res.status(400).send('Incorrect Payload.')

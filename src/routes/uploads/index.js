@@ -18,14 +18,14 @@ const storage = multer.memoryStorage({
 })
 const upload = multer({ storage }).single('image')
 
-router.get('/', (req, res) => {
+router.get('/:fileName', (req, res) => {
   presignedUploadUrl(req).then(data => res.status(200).send(data)).catch(err => {
     console.log(err)
     res.status(500).send('Something went wrong')
   })
 })
 
-router.post('/', upload, (req, res) => {
+router.post('/', upload, async (req, res) => {
   try {
     await uploadFile(req)
     res.status(200)

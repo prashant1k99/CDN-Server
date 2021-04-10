@@ -10,14 +10,15 @@ const validateAPIkey = async (req, res, next) => {
     const fetchedKey = await API.findOne({
       apiKey: userKey
     }).populate('user')
+    if (!fetchedKey) return res.status('401').send('Invalid API key.')
     const domainsWhitelistedForKey = fetchedKey._doc.whiteListedDomain
     if (domainsWhitelistedForKey.length === 0) {
       req.user = fetchedKey._doc.user
-      next()
+      return next()
     }
-    else if (domainsWhitelistedForKey.includes(originURL)) {
+    if (domainsWhitelistedForKey.includes(originURL)) {
       req.user = fetchedKey._doc.user
-      next()
+      return next()
     }
     res.status('401').send('Request domain is not allowed for the API key.')
   } catch (err) {
