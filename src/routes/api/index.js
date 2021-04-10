@@ -38,7 +38,8 @@ router.post('/key', authTokenValidator, async (req, res) => {
       api: apiKey
     })
   } catch (err) {
-    res.status(500).send(err)
+    console.log(err)
+    res.status(500).send('Something went wrong')
   }
 })
 
@@ -51,7 +52,23 @@ router.delete('/key/:id', authTokenValidator, async (req, res) => {
     if (!apiKey) return res.status(401).send('No Such API Key exists for the user.')
     res.status(200)
   } catch (err) {
-    res.status(500).send(err)
+    console.log(err)
+    res.status(500).send('Something went wrong')
+  }
+})
+
+router.update('/key/:id', authTokenValidator, async (req, res) => {
+  try {
+    if (!req.body || Object.keys(req.body).length === 0) return res.status(400).send('Payload is not provided.')
+    if (typeof req.body.domains !== 'object') return res.status(400).send('Incorrect Payload.')
+    await API.updateOne({
+      _id: req.params.id,
+      user: req.user._id
+    }).set('whiteListedDomain', req.body.domains)
+    res.status(200)
+  } catch (err) {
+    console.log(err)
+    res.status(500).send('Something went wrong')
   }
 })
 
