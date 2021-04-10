@@ -11,7 +11,11 @@ const validateAPIkey = async (req, res, next) => {
       apiKey: userKey
     }).populate('user')
     const domainsWhitelistedForKey = fetchedKey._doc.whiteListedDomain
-    if (domainsWhitelistedForKey.includes(originURL)) {
+    if (domainsWhitelistedForKey.length === 0) {
+      req.user = fetchedKey._doc.user
+      next()
+    }
+    else if (domainsWhitelistedForKey.includes(originURL)) {
       req.user = fetchedKey._doc.user
       next()
     }
