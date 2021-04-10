@@ -15,6 +15,7 @@ app.use(cors(corsOption))
 
 app.use('/auth', routes.authRoute)
 app.use('/api', routes.apiRoute)
+app.use('/upload', routes.uploadRoute)
 app.use('/', (req, res) => res.send('Hello'))
 
 module.exports = app
